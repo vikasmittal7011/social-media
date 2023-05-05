@@ -6,19 +6,17 @@ function UserList(props) {
   return (
     <>
       <div className="container mt-3">
-        <div className="row">
-          {usersList.map((user) => {
-            return (
-              <UserItem
-                key={user.id}
-                id={user.id}
-                name={user.name}
-                image={user.img}
-                placesCount={user.places}
-              />
-            );
-          })}
-        </div>
+        {usersList.map((user) => {
+          return (
+            <UserItem
+              key={user.id}
+              id={user.id}
+              name={user.name}
+              image={user.img}
+              placesCount={user.places}
+            />
+          );
+        })}
       </div>
     </>
   );
