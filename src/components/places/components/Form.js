@@ -1,49 +1,38 @@
 import React from "react";
 import Button from "../../shared/components/Button";
+import Input from "../../shared/components/Input";
 
 function Form() {
   return (
     <div>
       <form>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name of Place
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            placeholder="Enter name of place"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="address" className="form-label">
-            Address
-          </label>
-          <textarea
-            type="text"
-            className="form-control"
-            id="address"
-            placeholder="Enter address of place"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <textarea
-            type="text"
-            className="form-control"
-            id="description"
-            placeholder="Write something about it"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="image" className="form-label">
-            image
-          </label>
-          <input type="file" className="form-control" id="image" />
-        </div>
+        <Input
+          title="Name of Place"
+          id="name"
+          type="text"
+          name=""
+          placeholder="Enter name of place"
+          required={true}
+        />
+        <Input
+          title="Address"
+          id="address"
+          type="text"
+          name=""
+          placeholder="Enter address of place"
+          required={true}
+        />
+        <Input
+          title="Description"
+          id="description"
+          type="text"
+          name=""
+          placeholder="Write something about it"
+          required={true}
+          textarea={true}
+        />
+        <Input title="Image" id="image" type="file" name="" required={true} />
+
         <Button name="Add Place" outline={true} type="primary" />
       </form>
     </div>
