@@ -3,12 +3,17 @@ import Users from "./components/users/pages/Users";
 import Navbar from "./components/shared/components/Navbar";
 import About from "./components/shared/components/About";
 import UserPlace from "./components/places/pages/UserPlace";
+import Alert from "./components/shared/components/Alert";
+import { useSelector } from "react-redux";
 
 function App() {
+  const alert = useSelector((state) => state.alert);
+
   return (
     <BrowserRouter>
       <Navbar />
-      <main style={{marginTop: "5rem"}}>
+      <main style={{ marginTop: "5rem" }}>
+        <Alert alert={alert} />
         <Routes>
           <Route exact path="/" element={<Users />} />
           <Route exact path="about" element={<About />} />

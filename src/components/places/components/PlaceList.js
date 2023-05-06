@@ -13,7 +13,7 @@ function PlaceList(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ width: "40vw" }}>
       {places.map((place) => (
         <PlaceItem key={place.id} singlePlace={place} />
       ))}

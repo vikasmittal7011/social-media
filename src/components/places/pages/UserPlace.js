@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import PlaceList from "../components/PlaceList";
 
-function UserPlace() {
+function UserPlace(props) {
   const userID = useParams().userID;
   const demoPlaces = [
     {

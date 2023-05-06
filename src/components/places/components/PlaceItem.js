@@ -1,7 +1,23 @@
 import React from "react";
+import { actionCreators } from "../../../state/index";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
 function PlaceItem(props) {
   const { title, image, descrition, address } = props.singlePlace;
+
+  const dispatch = useDispatch();
+  const { activateAlert, removeAlert } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const handleVisitClick = () => {
+    activateAlert("Now map is not aviable, Sorry!!", "Success");
+    setTimeout(() => {
+      removeAlert();
+    }, 2000);
+  };
   return (
     <div className="card text-center mt-3">
       <div className="card-header">
@@ -13,7 +29,9 @@ function PlaceItem(props) {
         <p className="card-text">{descrition}</p>
       </div>
       <div className="card-footer">
-        <button className="btn btn-primary m-2">Visit</button>
+        <button className="btn btn-primary m-2" onClick={handleVisitClick}>
+          Visit
+        </button>
         <button className="btn btn-primary m-2">Edit</button>
         <button className="btn btn-primary m-2">Delete</button>
       </div>
