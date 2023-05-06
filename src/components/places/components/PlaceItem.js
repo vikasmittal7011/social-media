@@ -29,11 +29,11 @@ function PlaceItem(props) {
         <p className="card-text">{descrition}</p>
       </div>
       <div className="card-footer">
-        <button className="btn btn-primary m-2" onClick={handleVisitClick}>
-          Visit
+        <button className="btn btn-outline-dark m-2" onClick={handleVisitClick}>
+          Visit on Map
         </button>
-        <button className="btn btn-primary m-2">Edit</button>
-        <button className="btn btn-primary m-2">Delete</button>
+        <button className="btn btn-secondary m-2">Edit</button>
+        <button className="btn btn-danger m-2">Delete</button>
       </div>
     </div>
   );

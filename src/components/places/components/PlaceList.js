@@ -7,7 +7,7 @@ function PlaceList(props) {
   if (places.length === 0) {
     return (
       <div className="container text-center">
-        <h1>No places fount. Do you want one?</h1>
+        <h1>No places found. Do you want add one?</h1>
       </div>
     );
   }
