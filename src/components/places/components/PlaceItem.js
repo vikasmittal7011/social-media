@@ -2,6 +2,7 @@ import React from "react";
 import { actionCreators } from "../../../state/index";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import Button from "../../shared/components/Button";
 
 function PlaceItem(props) {
   const { title, image, descrition, address } = props.singlePlace;
@@ -29,11 +30,14 @@ function PlaceItem(props) {
         <p className="card-text">{descrition}</p>
       </div>
       <div className="card-footer">
-        <button className="btn btn-outline-dark m-2" onClick={handleVisitClick}>
-          Visit on Map
-        </button>
-        <button className="btn btn-secondary m-2">Edit</button>
-        <button className="btn btn-danger m-2">Delete</button>
+        <Button
+          name="Visit on Map"
+          type="dark m-2"
+          outline={true}
+          onClick={handleVisitClick}
+        />
+        <Button name="Delete" type="danger m-2" />
+        <Button name="Edit" type="secondary m-2" />
       </div>
     </div>
   );

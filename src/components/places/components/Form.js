@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../shared/components/Button";
 
 function Form() {
   return (
@@ -43,7 +44,7 @@ function Form() {
           </label>
           <input type="file" className="form-control" id="image" />
         </div>
-        <button className="btn btn-outline-primary">Add</button>
+        <Button name="Add Place" outline={true} type="primary" />
       </form>
     </div>
   );

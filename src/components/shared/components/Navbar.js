@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import Button from "./Button";
 
 function Navbar() {
   const location = useLocation().pathname;
@@ -49,9 +50,9 @@ function Navbar() {
             </li>
           </ul>
           <Link to="/login">
-            <button className="btn btn-info mx-1">Login</button>
+            <Button name="Login" type="info" />
           </Link>
-          <button className="btn btn-info mx-1">Logout</button>
+          <Button name="Logout" type="info" />
         </div>
       </div>
     </nav>
