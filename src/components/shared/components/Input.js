@@ -1,7 +1,21 @@
 import React from "react";
 
 function Input(props) {
-  const { title, id, name, type, placeholder, textarea, row, required } = props;
+  const {
+    title,
+    id,
+    name,
+    type,
+    placeholder,
+    textarea,
+    row,
+    required,
+    onInput,
+  } = props;
+
+  const handleChnage = (event) => {
+    onInput(event.target.value, id);
+  };
 
   const inputTag = !textarea ? (
     <input
@@ -11,6 +25,7 @@ function Input(props) {
       name={name}
       placeholder={placeholder}
       required={required}
+      onChange={handleChnage}
     />
   ) : (
     <textarea
@@ -21,6 +36,7 @@ function Input(props) {
       placeholder={placeholder}
       rows={row || 3}
       required={required}
+      onChange={handleChnage}
     />
   );
 
