@@ -35,7 +35,7 @@ function Navbar() {
             <li className="nav-item">
               <Link
                 className={`nav-link  ${location === "/about" && "active"}`}
-                to="/1/places"
+                to="/2/places"
               >
                 My Places
               </Link>

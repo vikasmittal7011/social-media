@@ -3,15 +3,21 @@ import { actionCreators } from "../../../state/index";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "../../shared/components/Button";
+import { useNavigate } from "react-router-dom";
 
 function PlaceItem(props) {
-  const { title, image, descrition, address } = props.singlePlace;
+  const navigate = useNavigate();
+  const { title, image, descrition, address, id } = props.singlePlace;
 
   const dispatch = useDispatch();
   const { activateAlert, removeAlert } = bindActionCreators(
     actionCreators,
     dispatch
   );
+
+  const editFormrTransfer = () => {
+    navigate(`/places/${id}`);
+  };
 
   const handleVisitClick = () => {
     activateAlert("Now map is not aviable, Sorry!!", "Success");
@@ -37,7 +43,7 @@ function PlaceItem(props) {
           onClick={handleVisitClick}
         />
         <Button name="Delete" type="danger m-2" />
-        <Button name="Edit" type="secondary m-2" />
+        <Button onClick={editFormrTransfer} name="Edit" type="secondary m-2" />
       </div>
     </div>
   );

@@ -1,14 +1,20 @@
+import { useSelector } from "react-redux";
 import React, { useCallback, useState } from "react";
+import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
+
+import { actionCreators } from "../../../state/index";
 import FormButton from "../../shared/components/FormButton";
 import Input from "../../shared/components/Input";
 
 function Form() {
-  const [placeDetails, setPlaceDetails] = useState({
-    name: "",
-    description: "",
-    address: "",
-    isValid: false,
-  });
+  const dispatch = useDispatch();
+  const { addPlace } = bindActionCreators(actionCreators, dispatch);
+  const places = useSelector((state) => state.place);
+
+  const [placeDetails, setPlaceDetails] = useState(places);
+
+  const { name, address, description, isValid } = placeDetails;
 
   const handleTitleChnage = useCallback(
     (title, id) => {
@@ -16,17 +22,13 @@ function Form() {
         ...placeDetails,
         [id]: title,
       });
-      if (
-        placeDetails.name.length > 2 &&
-        placeDetails.description.length > 3 &&
-        placeDetails.address.length > 5
-      ) {
-        setPlaceDetails({
-          ...placeDetails,
-          isValid: true,
-        });
-      }
+      checkValid(
+        placeDetails.name,
+        placeDetails.address,
+        placeDetails.description
+      );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
   );
 
@@ -36,17 +38,13 @@ function Form() {
         ...placeDetails,
         [id]: description,
       });
-      if (
-        placeDetails.name.length > 2 &&
-        placeDetails.description.length > 3 &&
-        placeDetails.address.length > 5
-      ) {
-        setPlaceDetails({
-          ...placeDetails,
-          isValid: true,
-        });
-      }
+      checkValid(
+        placeDetails.name,
+        placeDetails.address,
+        placeDetails.description
+      );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
   );
 
@@ -56,22 +54,28 @@ function Form() {
         ...placeDetails,
         [id]: address,
       });
-      if (
-        placeDetails.name.length > 2 &&
-        placeDetails.description.length > 3 &&
-        placeDetails.address.length > 5
-      ) {
-        setPlaceDetails({
-          ...placeDetails,
-          isValid: true,
-        });
-      }
+      checkValid(
+        placeDetails.name,
+        placeDetails.address,
+        placeDetails.description
+      );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
   );
 
   const handleSubmition = (event) => {
     event.preventDefault();
+    addPlace(name, description, address, isValid);
+  };
+
+  const checkValid = (title, des, add) => {
+    if (title.length > 2 && des.length > 3 && add.length > 5) {
+      setPlaceDetails({
+        ...placeDetails,
+        isValid: true,
+      });
+    }
   };
 
   return (

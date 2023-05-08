@@ -4,13 +4,13 @@ function Input(props) {
   const {
     title,
     id,
-    name,
     type,
     placeholder,
     textarea,
     row,
     required,
     onInput,
+    value,
   } = props;
 
   const handleChnage = (event) => {
@@ -22,21 +22,23 @@ function Input(props) {
       type={type}
       className="form-control"
       id={id}
-      name={name}
+      name={id}
       placeholder={placeholder}
       required={required}
       onChange={handleChnage}
+      value={value}
     />
   ) : (
     <textarea
       type={type}
       className="form-control"
       id={id}
-      name={name}
+      name={id}
       placeholder={placeholder}
       rows={row || 3}
       required={required}
       onChange={handleChnage}
+      value={value}
     />
   );
 
