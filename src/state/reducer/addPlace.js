@@ -8,7 +8,7 @@ const reducer = (
       description: action.payload.description,
       address: action.payload.address,
       isValid: action.payload.isValid,
-    });
+    }) + console.log(state);
   } else {
     return state;
   }

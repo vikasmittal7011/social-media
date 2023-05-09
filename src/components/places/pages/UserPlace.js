@@ -10,13 +10,10 @@ function UserPlace(props) {
       title: "Red Fort",
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm8LcGbb_GcSH4dmWuiHPJY0C-U7KZ0-QXMA&usqp=CAU      ",
-      descrition: "A old age for fort",
+      descrition:
+        "17th-century Mughal fortress built in towering red sandstone, now a complex of museums.",
       address:
         "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006",
-      loaction: {
-        len: 28.6568928,
-        ge: 77.2355361,
-      },
       userID: "1",
     },
     {
@@ -27,10 +24,6 @@ function UserPlace(props) {
       descrition:
         "17th-century, Mughal-style, marble mausoleum with minarets, a mosque & famously symmetrical gardens.",
       address: "Dharmapuri, Forest Colony, Tajganj, Agra, Uttar Pradesh 282001",
-      loaction: {
-        len: 27.1751448,
-        ge: 78.0318425,
-      },
       userID: "2",
     },
   ];
