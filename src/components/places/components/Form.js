@@ -14,7 +14,9 @@ function Form() {
 
   const [placeDetails, setPlaceDetails] = useState(places);
 
-  const { name, address, description, isValid } = placeDetails;
+  const [isValid, setIsValid] = useState(false);
+
+  const { name, address, description } = placeDetails;
 
   const handleTitleChnage = useCallback(
     (title, id) => {
@@ -71,10 +73,7 @@ function Form() {
 
   const checkValid = (title, des, add) => {
     if (title.length > 2 && des.length > 3 && add.length > 5) {
-      setPlaceDetails({
-        ...placeDetails,
-        isValid: true,
-      });
+      setIsValid(true);
     }
   };
 
@@ -88,6 +87,7 @@ function Form() {
           placeholder="Enter name of place"
           required={true}
           onInput={handleTitleChnage}
+          length={5}
         />
         <Input
           title="Address"
@@ -96,6 +96,7 @@ function Form() {
           placeholder="Enter address of place"
           required={true}
           onInput={handleDescriptionChnage}
+          length={10}
         />
         <Input
           title="Description"
@@ -105,6 +106,7 @@ function Form() {
           required={true}
           textarea={true}
           onInput={handleAddressChnage}
+          length={20}
         />
         <Input title="Image" id="image" type="file" />
 
@@ -112,7 +114,7 @@ function Form() {
           name="Add Place"
           outline={true}
           type="primary"
-          activate={placeDetails.isValid}
+          activate={isValid}
         />
       </form>
     </div>

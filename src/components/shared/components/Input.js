@@ -3,8 +3,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function Input(props) {
-  const { title, id, type, placeholder, textarea, row, required, onInput } =
-    props;
+  const {
+    title,
+    id,
+    type,
+    placeholder,
+    textarea,
+    row,
+    required,
+    onInput,
+    length,
+  } = props;
   const [inputValue, setValue] = useState("");
   const handleChnage = (event) => {
     setValue(event.target.value);
@@ -26,6 +35,7 @@ function Input(props) {
       required={required}
       onChange={handleChnage}
       value={inputValue}
+      minLength={length}
     />
   ) : (
     <textarea
@@ -38,12 +48,13 @@ function Input(props) {
       required={required}
       onChange={handleChnage}
       value={inputValue}
+      minLength={length}
     />
   );
 
   return (
     <div className="mb-3">
-      <label htmlFor={id} className="form-label">
+      <label htmlFor={id} className="form-label fs-5">
         {title}
       </label>
       {inputTag}

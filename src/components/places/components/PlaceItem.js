@@ -25,6 +25,17 @@ function PlaceItem(props) {
       removeAlert();
     }, 2000);
   };
+
+  const deletePlace = () => {
+    const isConfirm = window.confirm(
+      "Are to sure to delete this place. We can't able to undo this process!!!"
+    );
+
+    if (isConfirm) {
+      console.log("Deleting");
+    }
+  };
+
   return (
     <div className="card text-center mt-3">
       <div className="card-header">
@@ -42,7 +53,7 @@ function PlaceItem(props) {
           outline={true}
           onClick={handleVisitClick}
         />
-        <Button name="Delete" type="danger m-2" />
+        <Button onClick={deletePlace} name="Delete" type="danger m-2" />
         <Button onClick={editFormrTransfer} name="Edit" type="secondary m-2" />
       </div>
     </div>
