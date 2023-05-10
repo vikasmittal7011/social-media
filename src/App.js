@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import AddPlaces from "./components/places/pages/AddPlaces";
 import UpdatePlace from "./components/places/pages/UpdatePlace";
 import Auth from "./components/users/pages/Auth";
+import Register from "./components/users/pages/Register";
 
 function App() {
   const alert = useSelector((state) => state.alert);
@@ -25,6 +26,7 @@ function App() {
             <Route exact path="/places/addPlace" element={<AddPlaces />} />
             <Route exact path="/places/:placeId" element={<UpdatePlace />} />
             <Route exact path="/login" element={<Auth />} />
+            <Route exact path="/register" element={<Register />} />
             <Route path="*" element={<Users />} />
           </Routes>
         </main>

@@ -1,9 +1,13 @@
 import React from "react";
 import Input from "../../shared/components/Input";
-import FromButton from "../../shared/components/FormButton";
+import FormButton from "../../shared/components/FormButton";
 import { useCallback } from "react";
 import { useState } from "react";
+import Button from "../../shared/components/Button";
+import { useNavigate } from "react-router-dom";
 function Auth() {
+  const navigate = useNavigate();
+
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -72,7 +76,16 @@ function Auth() {
             onInput={handlePassword}
             length={8}
           />
-          <FromButton name="Login" type="success" activate={userIsValid} />
+          <div className="text-center">
+            <FormButton name="Login" type="success" activate={userIsValid} />
+            <Button
+              onClick={() => {
+                navigate("/register");
+              }}
+              name="Register"
+              type="secondary"
+            />
+          </div>
         </form>
       </div>
     </div>

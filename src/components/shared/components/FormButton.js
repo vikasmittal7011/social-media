@@ -5,6 +5,7 @@ function FormButton(props) {
   if (outline === true) {
     return (
       <button
+        type="submit"
         disabled={!activate}
         className={`btn btn-outline-${type} mx-1`}
         onClick={onClick}
@@ -15,6 +16,7 @@ function FormButton(props) {
   }
   return (
     <button
+      type="submit"
       disabled={!activate}
       className={`btn btn-${type} mx-2`}
       onClick={onClick}
