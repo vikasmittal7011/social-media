@@ -12,7 +12,6 @@ import Register from "./components/users/pages/Register";
 
 function App() {
   const alert = useSelector((state) => state.alert);
-
   return (
     <BrowserRouter>
       <Navbar />
