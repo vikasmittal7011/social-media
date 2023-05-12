@@ -35,13 +35,15 @@ function UpdatePlace() {
 
   const [updatePlace, setUpdatePlace] = useState(editPlace);
 
+  const [isFormValid, setIsFormvalid] = useState(true);
+
   const handleTitleChange = useCallback(
     (title, id) => {
       setUpdatePlace({
         ...updatePlace,
         [id]: title,
       });
-      checkValid();
+      checkValid(title, updatePlace.descrition);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [editPlace]
@@ -53,7 +55,7 @@ function UpdatePlace() {
         ...updatePlace,
         [id]: des,
       });
-      checkValid();
+      checkValid(updatePlace.title, des);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [editPlace]
@@ -61,10 +63,9 @@ function UpdatePlace() {
 
   const checkValid = (title, des) => {
     if (title > 3 && des > 5) {
-      setUpdatePlace({
-        ...updatePlace,
-        isValid: true,
-      });
+      setIsFormvalid(true);
+    } else {
+      setIsFormvalid(false);
     }
   };
 
@@ -91,11 +92,7 @@ function UpdatePlace() {
           textarea={true}
           onInput={handleDesChange}
         />
-        <FormButton
-          name="Update Place"
-          type="primary"
-          activate={updatePlace.isValid}
-        />
+        <FormButton name="Update Place" type="primary" activate={isFormValid} />
       </form>
     </div>
   );

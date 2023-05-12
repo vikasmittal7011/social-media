@@ -32,3 +32,12 @@ export const addPlace = (name, description, address, isValid) => {
     });
   };
 };
+
+export const setLoading = (loading) => {
+  return (dispatch) => {
+    dispatch({
+      type: "setLoading",
+      payload: loading,
+    });
+  };
+};
