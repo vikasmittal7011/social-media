@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../../shared/components/Input";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormButton from "../../shared/components/FormButton";
 import Button from "../../shared/components/Button";
@@ -17,7 +17,7 @@ function Register() {
   const dispatch = useDispatch();
 
   const { activateAlert } = bindActionCreators(actionCreators, dispatch);
-
+  console.log(activateAlert);
   const { api } = useSelector((state) => state);
 
   const [loading, setLoading] = useState(false);
