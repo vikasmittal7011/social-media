@@ -1,13 +1,26 @@
 import React from "react";
 import Input from "../../shared/components/Input";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormButton from "../../shared/components/FormButton";
 import Button from "../../shared/components/Button";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import Loading from "../../shared/components/Loading";
+import { actionCreators } from "../../../state/index";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
 function Register() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { activateAlert } = bindActionCreators(actionCreators, dispatch);
+
+  const { api } = useSelector((state) => state);
+
+  const [loading, setLoading] = useState(false);
 
   const [userIsValid, setuserIsValid] = useState(false);
 
@@ -74,10 +87,30 @@ function Register() {
     }
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(userDetails);
+    try {
+      setLoading(true);
+      const response = await fetch(`${api}api/users/registe`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const jsonData = await response.json();
+      console.log(jsonData);
+      // if()
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="container">
       <h2 className="text-center">Register Yourself !!!</h2>
