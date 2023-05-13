@@ -16,8 +16,11 @@ function Register() {
 
   const dispatch = useDispatch();
 
-  const { activateAlert } = bindActionCreators(actionCreators, dispatch);
-  console.log(activateAlert);
+  const { activateAlert, removeAlert } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+  
   const { api } = useSelector((state) => state);
 
   const [loading, setLoading] = useState(false);
@@ -91,19 +94,29 @@ function Register() {
     event.preventDefault();
     try {
       setLoading(true);
-      const response = await fetch(`${api}api/users/registe`, {
+      const response = await fetch(`${api}api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, email, password }),
       });
-      const jsonData = await response.json();
-      console.log(jsonData);
-      // if()
+      const { message, success } = await response.json();
+      if (!success) {
+        activateAlert(message, "Danger");
+        setTimeout(() => {
+          removeAlert(null);
+        }, 5000);
+      } else {
+        activateAlert(message, "Success");
+        setTimeout(() => {
+          removeAlert(null);
+        }, 2000);
+        navigate("/login");
+      }
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      setLoading(false);
     }
   };
 
@@ -112,59 +125,65 @@ function Register() {
   }
 
   return (
-    <div className="container">
-      <h2 className="text-center">Register Yourself !!!</h2>
-      <div className="container w-75">
-        <form className="mt-4" onSubmit={handleFormSubmit}>
-          <Input
-            title="Name"
-            type="text"
-            id="name"
-            required={true}
-            placeholder="Enter your name..."
-            onInput={handleName}
-            length={3}
-          />
-          <Input
-            title="Email"
-            type="email"
-            id="email"
-            required={true}
-            placeholder="Enter your email..."
-            onInput={handleEmail}
-          />
-          <Input
-            title="Password"
-            type="password"
-            id="password"
-            required={true}
-            placeholder="Enter your password..."
-            onInput={handlePassword}
-            length={8}
-          />
-          <Input
-            title="Confirm Password"
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm your password..."
-            required={true}
-            onInput={handleConfirmPassword}
-            length={8}
-          />
-          <Input title="Image" type="file" id="image" />
-          <div className="text-center">
-            <FormButton name="Register" type="primary" activate={userIsValid} />
-            <Button
-              name="Login"
-              type="success"
-              onClick={() => {
-                navigate("/login");
-              }}
+    <React.Fragment>
+      <div className="container">
+        <h2 className="text-center">Register Yourself !!!</h2>
+        <div className="container w-75">
+          <form className="mt-4" onSubmit={handleFormSubmit}>
+            <Input
+              title="Name"
+              type="text"
+              id="name"
+              required={true}
+              placeholder="Enter your name..."
+              onInput={handleName}
+              length={3}
             />
-          </div>
-        </form>
+            <Input
+              title="Email"
+              type="email"
+              id="email"
+              required={true}
+              placeholder="Enter your email..."
+              onInput={handleEmail}
+            />
+            <Input
+              title="Password"
+              type="password"
+              id="password"
+              required={true}
+              placeholder="Enter your password..."
+              onInput={handlePassword}
+              length={8}
+            />
+            <Input
+              title="Confirm Password"
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirm your password..."
+              required={true}
+              onInput={handleConfirmPassword}
+              length={8}
+            />
+            <Input title="Image" type="file" id="image" />
+            <div className="text-center">
+              <FormButton
+                name="Register"
+                type="primary"
+                activate={userIsValid}
+              />
+              <Button
+                name="Login"
+                type="success"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 
