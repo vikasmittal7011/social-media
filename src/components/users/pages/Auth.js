@@ -5,13 +5,32 @@ import { useCallback } from "react";
 import { useState } from "react";
 import Button from "../../shared/components/Button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Loading from "../../shared/components/Loading";
+import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
+import { actionCreators } from "../../../state/index";
+
 function Auth() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { activateAlert, removeAlert } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const { api } = useSelector((state) => state);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+
+  const { email, password } = userDetails;
 
   const [userIsValid, setUserIsValid] = useState(false);
 
@@ -49,10 +68,41 @@ function Auth() {
     }
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(userDetails);
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${api}api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const jsonData = await response.json();
+      const { existingUser, success, message } = jsonData;
+      if (!success) {
+        activateAlert(message, "Danger");
+        setTimeout(() => {
+          removeAlert();
+        }, 5000);
+      } else {
+        activateAlert(message, "Success");
+        setTimeout(() => {
+          removeAlert();
+        }, 5000);
+        localStorage.setItem("userId", existingUser._id);
+        navigate("/");
+      }
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="container">

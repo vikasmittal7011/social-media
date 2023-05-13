@@ -8,7 +8,6 @@ const Alert = () => {
       <div
         className={`alert alert-${alertState.type.toLowerCase()} alert-dismissible fade show fixed-top`}
         role="alert"
-        style={{ margin: "3.5rem" }}
       >
         <strong>{alertState.type}</strong> : {alertState.message}
       </div>
