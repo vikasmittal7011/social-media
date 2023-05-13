@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -10,8 +9,6 @@ import Input from "../../shared/components/Input";
 import Loading from "../../shared/components/Loading";
 
 function Form() {
-  const places = useSelector((state) => state.place);
-
   const { activateAlert, removeAlert } = bindActionCreators(
     actionCreators,
     useDispatch()
@@ -19,39 +16,25 @@ function Form() {
 
   const { loading, sendRequest } = useHttpClient();
 
-  const [placeDetails, setPlaceDetails] = useState(places);
+  const [placeDetails, setPlaceDetails] = useState({
+    name: "",
+    address: "",
+    description: "",
+  });
+
+  console.log(placeDetails);
 
   const [isValid, setIsValid] = useState(false);
 
-  const { name, address, description } = placeDetails;
+  const { name, description, address } = placeDetails;
 
-  const handleTitleChnage = useCallback(
-    (title, id) => {
+  const handlenameChnage = useCallback(
+    (name, id) => {
       setPlaceDetails({
         ...placeDetails,
-        [id]: title,
+        [id]: name,
       });
-      checkValid(
-        placeDetails.name,
-        placeDetails.address,
-        placeDetails.description
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [placeDetails]
-  );
-
-  const handleDescriptionChnage = useCallback(
-    (description, id) => {
-      setPlaceDetails({
-        ...placeDetails,
-        [id]: description,
-      });
-      checkValid(
-        placeDetails.name,
-        placeDetails.address,
-        placeDetails.description
-      );
+      checkValid(name, description, address);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
@@ -63,11 +46,19 @@ function Form() {
         ...placeDetails,
         [id]: address,
       });
-      checkValid(
-        placeDetails.name,
-        placeDetails.address,
-        placeDetails.description
-      );
+      checkValid(name, description, address);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [placeDetails]
+  );
+
+  const handleDescriptionChnage = useCallback(
+    (description, id) => {
+      setPlaceDetails({
+        ...placeDetails,
+        [id]: description,
+      });
+      checkValid(name, description, address);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
@@ -81,7 +72,7 @@ function Form() {
         "api/places/",
         "POST",
         JSON.stringify({
-          title: name,
+          name: name,
           descrition: description,
           address: address,
           userID: userId,
@@ -104,8 +95,9 @@ function Form() {
     }
   };
 
-  const checkValid = (title, des, add) => {
-    if (title.length > 2 && des.length > 3 && add.length > 5) {
+  const checkValid = (name, des, add) => {
+    console.log(name, des, add);
+    if (name.length >= 2 && des.length >= 3 && add.length >= 5) {
       setIsValid(true);
     }
   };
@@ -120,7 +112,7 @@ function Form() {
           type="text"
           placeholder="Enter name of place"
           required={true}
-          onInput={handleTitleChnage}
+          onInput={handlenameChnage}
           length={5}
         />
         <Input
@@ -129,7 +121,7 @@ function Form() {
           type="text"
           placeholder="Enter address of place"
           required={true}
-          onInput={handleDescriptionChnage}
+          onInput={handleAddressChnage}
           length={10}
         />
         <Input
@@ -139,7 +131,7 @@ function Form() {
           placeholder="Write something about it"
           required={true}
           textarea={true}
-          onInput={handleAddressChnage}
+          onInput={handleDescriptionChnage}
           length={20}
         />
         <Input title="Image" id="image" type="file" />
