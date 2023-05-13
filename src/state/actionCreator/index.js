@@ -32,3 +32,12 @@ export const addPlace = (name, description, address, isValid) => {
     });
   };
 };
+
+export const updateUserLogin = (value) => {
+  return (dispatch) => {
+    dispatch({
+      type: "user",
+      payload: value,
+    });
+  };
+};

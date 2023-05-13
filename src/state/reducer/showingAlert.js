@@ -4,7 +4,7 @@ const reducer = (state = null, action) => {
   } else if (action.type === "removeAlert") {
     return (state = action.payload);
   } else {
-    return null;
+    return state;
   }
 };
 
