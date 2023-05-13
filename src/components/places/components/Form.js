@@ -1,16 +1,23 @@
 import { useSelector } from "react-redux";
 import React, { useCallback, useState } from "react";
-import { bindActionCreators } from "redux";
 import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import { actionCreators } from "../../../state/index";
+import { useHttpClient } from "../../../hooks/fetchCall";
 import FormButton from "../../shared/components/FormButton";
 import Input from "../../shared/components/Input";
+import Loading from "../../shared/components/Loading";
 
 function Form() {
-  const dispatch = useDispatch();
-  const { addPlace } = bindActionCreators(actionCreators, dispatch);
   const places = useSelector((state) => state.place);
+
+  const { activateAlert, removeAlert } = bindActionCreators(
+    actionCreators,
+    useDispatch()
+  );
+
+  const { loading, sendRequest } = useHttpClient();
 
   const [placeDetails, setPlaceDetails] = useState(places);
 
@@ -66,9 +73,35 @@ function Form() {
     [placeDetails]
   );
 
-  const handleSubmition = (event) => {
+  const handleSubmition = async (event) => {
     event.preventDefault();
-    addPlace(name, description, address, isValid);
+    const userId = localStorage.getItem("userId");
+    try {
+      const response = await sendRequest(
+        "api/places/",
+        "POST",
+        JSON.stringify({
+          title: name,
+          descrition: description,
+          address: address,
+          userID: userId,
+        }),
+        { "Content-Type": "application/json" }
+      );
+      if (response) {
+        activateAlert("Place is successfully added!", "Success");
+        setTimeout(() => {
+          removeAlert();
+        }, 2000);
+      } else {
+        activateAlert("Something is wrong, try again later!", "Danger");
+        setTimeout(() => {
+          removeAlert();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const checkValid = (title, des, add) => {
@@ -79,6 +112,7 @@ function Form() {
 
   return (
     <div>
+      {loading && <Loading />}
       <form onSubmit={handleSubmition}>
         <Input
           title="Name of Place"
