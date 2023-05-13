@@ -5,11 +5,11 @@ import { useCallback } from "react";
 import { useState } from "react";
 import Button from "../../shared/components/Button";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Loading from "../../shared/components/Loading";
 import { bindActionCreators } from "redux";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../../../state/index";
+import { useHttpClient } from "../../../hooks/fetchCall";
 
 function Auth() {
   const navigate = useNavigate();
@@ -21,9 +21,7 @@ function Auth() {
     dispatch
   );
 
-  const { api } = useSelector((state) => state);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading, sendRequest } = useHttpClient();
 
   const [userDetails, setUserDetails] = useState({
     email: "",
@@ -71,21 +69,21 @@ function Auth() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      setIsLoading(true);
-      const response = await fetch(`${api}api/users/login`, {
-        method: "POST",
-        headers: {
+      const response = await sendRequest(
+        `api/users/login`,
+        "POST",
+        JSON.stringify({ email, password }),
+        {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const jsonData = await response.json();
+        }
+      );
+      const jsonData = response;
       const { existingUser, success, message } = jsonData;
       if (!success) {
         activateAlert(message, "Danger");
         setTimeout(() => {
           removeAlert();
-        }, 5000);
+        }, 2000);
       } else {
         updateUserLogin(true);
         activateAlert(message, "Success");
@@ -95,13 +93,10 @@ function Auth() {
         localStorage.setItem("userId", existingUser._id);
         navigate("/");
       }
-      setIsLoading(false);
-    } catch (err) {
-      setIsLoading(false);
-    }
+    } catch (err) {}
   };
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
 

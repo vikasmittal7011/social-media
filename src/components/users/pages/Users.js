@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import UserList from "../components/UserList";
 import Loading from "../../shared/components/Loading";
+import { useHttpClient } from "../../../hooks/fetchCall";
 
 const Users = () => {
-  const { api } = useSelector((state) => state);
-
-  const [loading, setLoading] = useState(false);
-
   const [userDetails, setUserDetails] = useState();
+
+  const { loading, sendRequest } = useHttpClient();
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        setLoading(true);
-        const response = await fetch(`${api}api/users`);
-        const jsonData = await response.json();
-        setLoading(false);
+        const response = await sendRequest(`api/users`);
+        const jsonData = await response;
         setUserDetails(jsonData.users);
         return;
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     getUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,13 +8,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (
-      path,
-      method = "GET",
-      body = null,
-      headers = {},
-      navigate = false
-    ) => {
+    async (path, method = "GET", body = null, headers = {}) => {
       setLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
@@ -37,7 +31,7 @@ export const useHttpClient = () => {
         return responseData;
       } catch (err) {
         setLoading(false);
-        console.log(err);
+        throw err;
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
