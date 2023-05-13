@@ -5,11 +5,11 @@ import { useState } from "react";
 import FormButton from "../../shared/components/FormButton";
 import Button from "../../shared/components/Button";
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
 import Loading from "../../shared/components/Loading";
 import { actionCreators } from "../../../state/index";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { useHttpClient } from "../../../hooks/fetchCall";
 
 function Register() {
   const navigate = useNavigate();
@@ -20,10 +20,8 @@ function Register() {
     actionCreators,
     dispatch
   );
-  
-  const { api } = useSelector((state) => state);
 
-  const [loading, setLoading] = useState(false);
+  const { loading, sendRequest } = useHttpClient();
 
   const [userIsValid, setuserIsValid] = useState(false);
 
@@ -83,7 +81,7 @@ function Register() {
   const checkUserDetails = (name, email, password, cpassword) => {
     let atTheRate = email.indexOf("@");
     let dot = email.indexOf(".");
-    if (name.length >= 3 && atTheRate > 5 && dot > atTheRate + 3) {
+    if (name.length >= 3 && atTheRate > 3 && dot > atTheRate + 3) {
       if (password === cpassword) {
         setuserIsValid(true);
       }
@@ -93,15 +91,18 @@ function Register() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      setLoading(true);
-      const response = await fetch(`${api}api/users/register`, {
-        method: "POST",
-        headers: {
+      const response = await sendRequest(
+        "api/users/register",
+        "POST",
+        JSON.stringify({ name, email, password }),
+        {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
-      });
-      const { message, success } = await response.json();
+        true,
+        "/login",
+        true
+      );
+      const { message, success } = response;
       if (!success) {
         activateAlert(message, "Danger");
         setTimeout(() => {
@@ -114,9 +115,8 @@ function Register() {
         }, 2000);
         navigate("/login");
       }
-      setLoading(false);
     } catch (err) {
-      setLoading(false);
+      console.log(err);
     }
   };
 
