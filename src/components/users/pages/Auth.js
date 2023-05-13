@@ -16,7 +16,7 @@ function Auth() {
 
   const dispatch = useDispatch();
 
-  const { activateAlert, removeAlert } = bindActionCreators(
+  const { activateAlert, removeAlert, updateUserLogin } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -87,10 +87,11 @@ function Auth() {
           removeAlert();
         }, 5000);
       } else {
+        updateUserLogin(true);
         activateAlert(message, "Success");
         setTimeout(() => {
           removeAlert();
-        }, 5000);
+        }, 2000);
         localStorage.setItem("userId", existingUser._id);
         navigate("/");
       }

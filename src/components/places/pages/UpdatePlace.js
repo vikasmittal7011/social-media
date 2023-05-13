@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FormButton from "../../shared/components/FormButton";
 import Input from "../../shared/components/Input";
 import { useCallback } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function UpdatePlace() {
   const demoPlaces = [
@@ -37,6 +39,10 @@ function UpdatePlace() {
 
   const [isFormValid, setIsFormvalid] = useState(true);
 
+  const navigate = useNavigate();
+
+  const { userLogin } = useSelector((state) => state);
+
   const handleTitleChange = useCallback(
     (title, id) => {
       setUpdatePlace({
@@ -68,6 +74,12 @@ function UpdatePlace() {
       setIsFormvalid(false);
     }
   };
+
+  useEffect(() => {
+    if (!userLogin) {
+      navigate("/");
+    }
+  }, [userLogin, navigate]);
 
   return (
     <div className="container" style={{ width: "70vw" }}>

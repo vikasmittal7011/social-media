@@ -1,8 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "./Button";
+import { useSelector } from "react-redux";
+import { actionCreators } from "../../../state/index";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userLogin } = useSelector((state) => state);
+  const { updateUserLogin } = bindActionCreators(actionCreators, dispatch);
   const location = useLocation().pathname;
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
@@ -32,27 +41,43 @@ function Navbar() {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link  ${location === "/about" && "active"}`}
-                to="/2/places"
-              >
-                My Places
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link  ${location === "/about" && "active"}`}
-                to="/places/addPlace"
-              >
-                Add Place
-              </Link>
-            </li>
+            {userLogin && (
+              <li className="nav-item">
+                <Link
+                  className={`nav-link  ${location === "/about" && "active"}`}
+                  to="/2/places"
+                >
+                  My Places
+                </Link>
+              </li>
+            )}
+            {userLogin && (
+              <li className="nav-item">
+                <Link
+                  className={`nav-link  ${location === "/about" && "active"}`}
+                  to="/places/addPlace"
+                >
+                  Add Place
+                </Link>
+              </li>
+            )}
           </ul>
-          <Link to="/login">
-            <Button name="Login" type="info" />
-          </Link>
-          <Button name="Logout" type="info" />
+          {!userLogin && (
+            <Link to="/login">
+              <Button name="Login" type="info" />
+            </Link>
+          )}
+          {userLogin && (
+            <Button
+              name="Logout"
+              type="info"
+              onClick={() => {
+                updateUserLogin(false);
+                localStorage.removeItem("userId");
+                navigate("/");
+              }}
+            />
+          )}
         </div>
       </div>
     </nav>

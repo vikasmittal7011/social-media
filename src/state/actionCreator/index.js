@@ -37,7 +37,9 @@ export const updateUserLogin = (value) => {
   return (dispatch) => {
     dispatch({
       type: "user",
-      payload: value,
+      payload: {
+        value: value,
+      },
     });
   };
 };
