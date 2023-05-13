@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function UserItem(props) {
   const { id, name, image, placesCount } = props;
   return (
-    <div className="container rounded-5" style={{width: "25rem"}}>
+    <div className="container rounded-5" style={{ width: "25rem" }}>
       <Link to={`/${id}/places`}>
         <div className="card mb-3">
           <div className="row g-0">
@@ -20,7 +20,7 @@ function UserItem(props) {
               <div className="card-body ms-5">
                 <h3 className="card-title">{name}</h3>
                 <h4 className="card-text">
-                  {placesCount} {placesCount === 1 ? "Place" : "Places"}
+                  {placesCount} {placesCount <= 1 ? "Place" : "Places"}
                 </h4>
               </div>
             </div>

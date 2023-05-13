@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import PlaceList from "../components/PlaceList";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function UserPlace(props) {
   const userID = useParams().userID;
@@ -33,16 +31,6 @@ function UserPlace(props) {
   const userIdPlaces = demoPlaces.filter((place) => {
     return place.userID === userID;
   });
-
-  const navigate = useNavigate();
-
-  const { userLogin } = useSelector((state) => state);
-
-  useEffect(() => {
-    if (!userLogin) {
-      navigate("/");
-    }
-  }, [userLogin, navigate]);
 
   return (
     <div className="container">

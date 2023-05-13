@@ -9,11 +9,11 @@ function UserList(props) {
         {usersList.map((user) => {
           return (
             <UserItem
-              key={user.id}
-              id={user.id}
+              key={user._id}
+              id={user._id}
               name={user.name}
-              image={user.img}
-              placesCount={user.places}
+              image={user.image}
+              placesCount={user.places.length}
             />
           );
         })}
