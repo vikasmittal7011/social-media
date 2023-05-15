@@ -3,8 +3,9 @@ import PlaceItem from "./PlaceItem";
 
 function PlaceList(props) {
   const { places } = props;
+  const { findedPlaces, success } = places;
 
-  if (places.length === 0) {
+  if (!success) {
     return (
       <div className="container text-center">
         <h1>No places found. Do you want add one?</h1>
@@ -13,11 +14,13 @@ function PlaceList(props) {
   }
 
   return (
-    <div className="container" style={{ width: "40vw" }}>
-      {places.map((place) => (
-        <PlaceItem key={place._id} singlePlace={place} />
-      ))}
-    </div>
+    places && (
+      <div className="container" style={{ width: "40vw" }}>
+        {findedPlaces.map((place) => (
+          <PlaceItem key={place._id} singlePlace={place} />
+        ))}
+      </div>
+    )
   );
 }
 

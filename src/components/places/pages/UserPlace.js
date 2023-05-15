@@ -5,11 +5,11 @@ import PlaceList from "../components/PlaceList";
 import Loading from "../../shared/components/Loading";
 import { useHttpClient } from "../../../hooks/fetchCall";
 function UserPlace() {
-  const [placeOfUser, setPlaceOfUser] = useState();
+  const [placeOfUser, setPlaceOfUser] = useState(null);
 
   const { loading, sendRequest } = useHttpClient();
 
-  const userID = useParams().userID;
+  let userID = useParams().userID;
 
   useEffect(() => {
     const getUserPlaces = async () => {

@@ -85,12 +85,11 @@ function Auth() {
           removeAlert();
         }, 2000);
       } else {
-        updateUserLogin(true);
+        updateUserLogin(existingUser._id);
         activateAlert(message, "Success");
         setTimeout(() => {
           removeAlert();
         }, 2000);
-        localStorage.setItem("userId", existingUser._id);
         navigate("/");
       }
     } catch (err) {}

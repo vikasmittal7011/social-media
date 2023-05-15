@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId");
   const { userLogin } = useSelector((state) => state);
   const { updateUserLogin } = bindActionCreators(actionCreators, dispatch);
   const location = useLocation().pathname;
@@ -46,7 +45,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link  ${location === "/about" && "active"}`}
-                  to={`/${userId}/places`}
+                  to={`/${userLogin}/places`}
                 >
                   My Places
                 </Link>
@@ -74,7 +73,6 @@ function Navbar() {
               type="info"
               onClick={() => {
                 updateUserLogin(false);
-                localStorage.removeItem("userId");
                 navigate("/");
               }}
             />

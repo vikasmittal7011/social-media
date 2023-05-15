@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { useSelector } from "react-redux";
 
 import { actionCreators } from "../../../state/index";
 import { useHttpClient } from "../../../hooks/fetchCall";
@@ -14,6 +15,7 @@ function Form() {
     useDispatch()
   );
 
+  const { userLogin } = useSelector((state) => state);
   const { loading, sendRequest } = useHttpClient();
 
   const [placeDetails, setPlaceDetails] = useState({
@@ -21,8 +23,6 @@ function Form() {
     address: "",
     description: "",
   });
-
-  console.log(placeDetails);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -66,20 +66,19 @@ function Form() {
 
   const handleSubmition = async (event) => {
     event.preventDefault();
-    const userId = localStorage.getItem("userId");
     try {
       const response = await sendRequest(
         "api/places/",
         "POST",
         JSON.stringify({
-          name: name,
+          title: name,
           descrition: description,
           address: address,
-          userID: userId,
+          userID: userLogin,
         }),
         { "Content-Type": "application/json" }
       );
-      if (response) {
+      if (response.success) {
         activateAlert("Place is successfully added!", "Success");
         setTimeout(() => {
           removeAlert();
@@ -90,13 +89,10 @@ function Form() {
           removeAlert();
         }, 2000);
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const checkValid = (name, des, add) => {
-    console.log(name, des, add);
     if (name.length >= 2 && des.length >= 3 && add.length >= 5) {
       setIsValid(true);
     }
