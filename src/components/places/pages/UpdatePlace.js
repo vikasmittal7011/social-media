@@ -4,13 +4,22 @@ import FormButton from "../../shared/components/FormButton";
 import Input from "../../shared/components/Input";
 import { useCallback } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useHttpClient } from "../../../hooks/fetchCall";
 import Loading from "../../shared/components/Loading";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../state/index";
 
 function UpdatePlace() {
   const { loading, sendRequest } = useHttpClient();
+
+  const dispatch = useDispatch();
+
+  const { activateAlert, removeAlert } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const placeId = useParams().placeId;
 
@@ -65,6 +74,31 @@ function UpdatePlace() {
 
   const onUpdatePlaceHandler = async (event) => {
     event.preventDefault();
+    try {
+      const response = await sendRequest(
+        `api/places/${placeId}`,
+        "PATCH",
+        JSON.stringify({
+          title: updatePlace.title,
+          descrition: updatePlace.descrition,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+      if (response.success) {
+        activateAlert(response.message, "Success");
+        setTimeout(() => {
+          removeAlert();
+        }, 2000);
+        navigate(`/${updatePlace.userID}/places`);
+      } else {
+        activateAlert(response.message, "Success");
+        setTimeout(() => {
+          removeAlert();
+        }, 2000);
+      }
+    } catch (err) {}
   };
 
   if (!userLogin) {
@@ -76,7 +110,8 @@ function UpdatePlace() {
   }
 
   return (
-    updatePlace && (
+    updatePlace &&
+    !loading && (
       <div className="container" style={{ width: "70vw" }}>
         <h2 className="text-center">Update Place Here!!! </h2>
         <form onSubmit={onUpdatePlaceHandler}>
