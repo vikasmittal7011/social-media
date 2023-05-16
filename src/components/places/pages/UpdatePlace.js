@@ -7,17 +7,16 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useHttpClient } from "../../../hooks/fetchCall";
+import Loading from "../../shared/components/Loading";
 
 function UpdatePlace() {
-  const { sendRequest } = useHttpClient();
+  const { loading, sendRequest } = useHttpClient();
 
   const placeId = useParams().placeId;
 
-  const [placeForUpdate, setPLaceForUpdate] = useState();
+  const [updatePlace, setUpdatePlace] = useState();
 
-  const [updatePlace, setUpdatePlace] = useState(placeForUpdate);
-
-  const [isFormvalid, setIsFormvalid] = useState(false);
+  const [isFormvalid, setIsFormvalid] = useState(true);
 
   const navigate = useNavigate();
 
@@ -58,7 +57,6 @@ function UpdatePlace() {
   useEffect(() => {
     const getPlace = async () => {
       const place = await sendRequest(`api/places/${placeId}`);
-      setPLaceForUpdate(place);
       setUpdatePlace(place);
     };
     getPlace();
@@ -72,8 +70,13 @@ function UpdatePlace() {
   if (!userLogin) {
     navigate("/");
   }
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    placeForUpdate && (
+    updatePlace && (
       <div className="container" style={{ width: "70vw" }}>
         <h2 className="text-center">Update Place Here!!! </h2>
         <form onSubmit={onUpdatePlaceHandler}>
@@ -83,7 +86,7 @@ function UpdatePlace() {
             type="text"
             placeholder="Enter name of place"
             required={true}
-            value={placeForUpdate.title}
+            value={updatePlace.title}
             onInput={handleTitleChange}
             length={3}
           />
@@ -93,7 +96,7 @@ function UpdatePlace() {
             type="text"
             placeholder="Write somthing about it..."
             required={true}
-            value={placeForUpdate.descrition}
+            value={updatePlace.descrition}
             textarea={true}
             onInput={handleDesChange}
             length={5}
