@@ -31,9 +31,11 @@ function Register() {
     email: "",
     password: "password",
     confirmPassword: "confimpassword",
+    image: "",
   });
+  // console.log(userDetails);
 
-  const { name, email, password, confirmPassword } = userDetails;
+  const { name, email, password, confirmPassword, image } = userDetails;
 
   const handleName = useCallback(
     (name, id) => {
@@ -41,7 +43,7 @@ function Register() {
         ...userDetails,
         [id]: name,
       });
-      checkUserDetails(name, email, password, confirmPassword);
+      checkUserDetails(name, email, password, confirmPassword, image);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [userDetails]
   );
@@ -52,7 +54,7 @@ function Register() {
         ...userDetails,
         [id]: email,
       });
-      checkUserDetails(name, email, password, confirmPassword);
+      checkUserDetails(name, email, password, confirmPassword, image);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [userDetails]
   );
@@ -63,7 +65,7 @@ function Register() {
         ...userDetails,
         [id]: password,
       });
-      checkUserDetails(name, email, password, confirmPassword);
+      checkUserDetails(name, email, password, confirmPassword, image);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [userDetails]
   );
@@ -74,26 +76,40 @@ function Register() {
         ...userDetails,
         [id]: cPassword,
       });
-      checkUserDetails(name, email, password, cPassword);
+      checkUserDetails(name, email, password, cPassword, image);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [userDetails]
   );
 
   const handleImage = useCallback(
     (image, id) => {
-      console.log(image, id);
+      console.log(image.name);
+      setUserDetails({
+        ...userDetails,
+        [id]: image,
+      });
+      checkUserDetails(name, email, password, confirmPassword, image);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userDetails]
   );
 
-  const checkUserDetails = (name, email, password, cpassword) => {
+  const checkUserDetails = (name, email, password, cpassword, image) => {
     let atTheRate = email.indexOf("@");
     let dot = email.indexOf(".");
-    if (name.length >= 3 && atTheRate > 3 && dot > atTheRate + 3) {
+    if (
+      name.length >= 3 &&
+      atTheRate > 3 &&
+      dot > atTheRate + 3 &&
+      image.name
+    ) {
       if (password === cpassword) {
         setuserIsValid(true);
+      } else {
+        setuserIsValid(false);
       }
+    } else {
+      setuserIsValid(false);
     }
   };
 
