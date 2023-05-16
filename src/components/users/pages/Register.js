@@ -10,6 +10,7 @@ import { actionCreators } from "../../../state/index";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { useHttpClient } from "../../../hooks/fetchCall";
+import ImageUpload from "../../shared/components/ImageUpload";
 
 function Register() {
   const navigate = useNavigate();
@@ -78,6 +79,14 @@ function Register() {
     [userDetails]
   );
 
+  const handleImage = useCallback(
+    (image, id) => {
+      console.log(image, id);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userDetails]
+  );
+
   const checkUserDetails = (name, email, password, cpassword) => {
     let atTheRate = email.indexOf("@");
     let dot = email.indexOf(".");
@@ -129,7 +138,7 @@ function Register() {
       <div className="container">
         <h2 className="text-center">Register Yourself !!!</h2>
         <div className="container w-75">
-          <form className="mt-4" onSubmit={handleFormSubmit}>
+          <form className="mt-2" onSubmit={handleFormSubmit}>
             <Input
               title="Name"
               type="text"
@@ -165,8 +174,8 @@ function Register() {
               onInput={handleConfirmPassword}
               length={8}
             />
-            <Input title="Image" type="file" id="image" />
-            <div className="text-center">
+            <ImageUpload id="image" onInput={handleImage} />
+            <div className="text-center mt-4">
               <FormButton
                 name="Register"
                 type="primary"
