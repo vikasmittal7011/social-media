@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 import { actionCreators } from "../../../state/index";
 import { useHttpClient } from "../../../hooks/fetchCall";
 import FormButton from "../../shared/components/FormButton";
@@ -14,7 +14,7 @@ function Form() {
     actionCreators,
     useDispatch()
   );
-
+  const navigate = useNavigate();
   const { userLogin } = useSelector((state) => state);
   const { loading, sendRequest } = useHttpClient();
 
@@ -83,6 +83,7 @@ function Form() {
         setTimeout(() => {
           removeAlert();
         }, 2000);
+        navigate(`/${userLogin}/places`);
       } else {
         activateAlert("Something is wrong, try again later!", "Danger");
         setTimeout(() => {
