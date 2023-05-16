@@ -17,7 +17,9 @@ function App() {
       <Navbar />
       <div>
         <main style={{ marginTop: "5rem" }}>
-          <Alert alert={alert} />
+          <div style={{ height: "1.5rem" }}>
+            <Alert alert={alert} />
+          </div>
           <Routes>
             <Route exact path="/" element={<Users />} />
             <Route exact path="about" element={<About />} />

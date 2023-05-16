@@ -46,7 +46,7 @@ function PlaceItem(props) {
           setTimeout(() => {
             removeAlert();
           }, 2000);
-          navigate(`/${userID}/places`);
+          navigate(`/`);
         } else {
           activateAlert(response.message, "Danger");
           setTimeout(() => {
