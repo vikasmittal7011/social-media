@@ -40,7 +40,14 @@ function PlaceItem(props) {
 
     if (isConfirm) {
       try {
-        const response = await sendRequest(`api/places/${_id}`, "DELETE");
+        const response = await sendRequest(
+          `api/places/${_id}`,
+          "DELETE",
+          null,
+          {
+            Authorization: "Breare " + userLogin.token,
+          }
+        );
         if (response.sucess) {
           activateAlert(response.message, "Success");
           setTimeout(() => {
@@ -60,7 +67,7 @@ function PlaceItem(props) {
   };
 
   useEffect(() => {
-    setValidUser(userLogin === userID);
+    setValidUser(userLogin.userId === userID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -82,10 +89,10 @@ function PlaceItem(props) {
           outline={true}
           onClick={handleVisitClick}
         />
-        {userLogin && validUser && (
+        {userLogin.userId && validUser && (
           <Button onClick={deletePlace} name="Delete" type="danger m-2" />
         )}
-        {userLogin && validUser && (
+        {userLogin.userId && validUser && (
           <Button
             onClick={editFormrTransfer}
             name="Edit"

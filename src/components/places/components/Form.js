@@ -17,6 +17,7 @@ function Form() {
   );
   const navigate = useNavigate();
   const { userLogin } = useSelector((state) => state);
+  const { userId, token } = userLogin;
   const { loading, sendRequest } = useHttpClient();
 
   const [placeDetails, setPlaceDetails] = useState({
@@ -84,16 +85,18 @@ function Form() {
     formData.append("title", name);
     formData.append("descrition", description);
     formData.append("address", address);
-    formData.append("userID", userLogin);
+    formData.append("userID", userId);
     formData.append("image", image);
     try {
-      const response = await sendRequest("api/places/", "POST", formData);
+      const response = await sendRequest("api/places/", "POST", formData, {
+        Authorization: "Breare " + token,
+      });
       if (response.success) {
         activateAlert("Place is successfully added!", "Success");
         setTimeout(() => {
           removeAlert();
         }, 2000);
-        navigate(`/${userLogin}/places`);
+        navigate(`/${userId}/places`);
       } else {
         activateAlert("Something is wrong, try again later!", "Danger");
         setTimeout(() => {

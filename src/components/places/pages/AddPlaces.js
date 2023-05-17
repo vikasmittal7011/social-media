@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 function AddPlaces() {
   const navigate = useNavigate();
   const { userLogin } = useSelector((state) => state);
+  const { userId } = userLogin;
   useEffect(() => {
-    if (!userLogin) {
+    if (!userId) {
       navigate("/");
     }
-  }, [userLogin, navigate]);
+  }, [userId, navigate]);
 
   return (
     <div className="container my-3" style={{ width: "70vw" }}>

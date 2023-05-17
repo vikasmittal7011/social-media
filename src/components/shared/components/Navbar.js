@@ -11,6 +11,7 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userLogin } = useSelector((state) => state);
+  const { userId } = userLogin;
   const { updateUserLogin } = bindActionCreators(actionCreators, dispatch);
   const location = useLocation().pathname;
   return (
@@ -41,17 +42,17 @@ function Navbar() {
                 Home
               </Link>
             </li>
-            {userLogin && (
+            {userId && (
               <li className="nav-item">
                 <Link
                   className={`nav-link  ${location === "/about" && "active"}`}
-                  to={`/${userLogin}/places`}
+                  to={`/${userId}/places`}
                 >
                   My Places
                 </Link>
               </li>
             )}
-            {userLogin && (
+            {userId && (
               <li className="nav-item">
                 <Link
                   className={`nav-link  ${location === "/about" && "active"}`}
@@ -62,12 +63,12 @@ function Navbar() {
               </li>
             )}
           </ul>
-          {!userLogin && (
+          {!userId && (
             <Link to="/login">
               <Button name="Login" type="info" />
             </Link>
           )}
-          {userLogin && (
+          {userId && (
             <Button
               name="Logout"
               type="info"

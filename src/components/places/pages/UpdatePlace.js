@@ -31,6 +31,8 @@ function UpdatePlace() {
 
   const { userLogin } = useSelector((state) => state);
 
+  const { userId, token } = userLogin;
+
   const handleTitleChange = useCallback(
     (title, id) => {
       setUpdatePlace({
@@ -84,6 +86,7 @@ function UpdatePlace() {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Breare " + token,
         }
       );
       if (response.success) {
@@ -101,7 +104,7 @@ function UpdatePlace() {
     } catch (err) {}
   };
 
-  if (!userLogin) {
+  if (!userId) {
     navigate("/");
   }
 

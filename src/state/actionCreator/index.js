@@ -33,12 +33,13 @@ export const addPlace = (name, description, address, isValid) => {
   };
 };
 
-export const updateUserLogin = (value) => {
+export const updateUserLogin = (userId, token) => {
   return (dispatch) => {
     dispatch({
       type: "user",
       payload: {
-        value: value,
+        userId: userId,
+        token: token,
       },
     });
   };

@@ -78,14 +78,14 @@ function Auth() {
         }
       );
       const jsonData = response;
-      const { existingUser, success, message } = jsonData;
+      const { existingUser, success, message, token } = jsonData;
       if (!success) {
         activateAlert(message, "Danger");
         setTimeout(() => {
           removeAlert();
         }, 2000);
       } else {
-        updateUserLogin(existingUser._id);
+        updateUserLogin(existingUser._id, token);
         activateAlert(message, "Success");
         setTimeout(() => {
           removeAlert();
