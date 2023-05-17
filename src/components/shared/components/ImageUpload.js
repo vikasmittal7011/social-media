@@ -40,6 +40,7 @@ function ImageUpload(props) {
         id={props.id}
         name={props.id}
         accept=".jpg,.jpeg,.png"
+        required={true}
         style={{ display: "none" }}
         onChange={pickerHandler}
       />

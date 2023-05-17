@@ -8,6 +8,7 @@ import { useHttpClient } from "../../../hooks/fetchCall";
 import FormButton from "../../shared/components/FormButton";
 import Input from "../../shared/components/Input";
 import Loading from "../../shared/components/Loading";
+import ImageUpload from "../../shared/components/ImageUpload";
 
 function Form() {
   const { activateAlert, removeAlert } = bindActionCreators(
@@ -22,11 +23,12 @@ function Form() {
     name: "",
     address: "",
     description: "",
+    image: "",
   });
 
   const [isValid, setIsValid] = useState(false);
 
-  const { name, description, address } = placeDetails;
+  const { name, description, address, image } = placeDetails;
 
   const handlenameChnage = useCallback(
     (name, id) => {
@@ -34,7 +36,7 @@ function Form() {
         ...placeDetails,
         [id]: name,
       });
-      checkValid(name, description, address);
+      checkValid(name, description, address, image);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
@@ -46,7 +48,7 @@ function Form() {
         ...placeDetails,
         [id]: address,
       });
-      checkValid(name, description, address);
+      checkValid(name, description, address, image);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
@@ -58,7 +60,19 @@ function Form() {
         ...placeDetails,
         [id]: description,
       });
-      checkValid(name, description, address);
+      checkValid(name, description, address, image);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [placeDetails]
+  );
+
+  const handleImage = useCallback(
+    (image, id) => {
+      setPlaceDetails({
+        ...placeDetails,
+        [id]: image,
+      });
+      checkValid(name, description, address, image);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [placeDetails]
@@ -66,18 +80,14 @@ function Form() {
 
   const handleSubmition = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("title", name);
+    formData.append("descrition", description);
+    formData.append("address", address);
+    formData.append("userID", userLogin);
+    formData.append("image", image);
     try {
-      const response = await sendRequest(
-        "api/places/",
-        "POST",
-        JSON.stringify({
-          title: name,
-          descrition: description,
-          address: address,
-          userID: userLogin,
-        }),
-        { "Content-Type": "application/json" }
-      );
+      const response = await sendRequest("api/places/", "POST", formData);
       if (response.success) {
         activateAlert("Place is successfully added!", "Success");
         setTimeout(() => {
@@ -93,9 +103,11 @@ function Form() {
     } catch (err) {}
   };
 
-  const checkValid = (name, des, add) => {
-    if (name.length >= 2 && des.length >= 3 && add.length >= 5) {
+  const checkValid = (name, des, add, image) => {
+    if (name.length >= 2 && des.length >= 3 && add.length >= 5 && image.name) {
       setIsValid(true);
+    } else {
+      setIsValid(false);
     }
   };
 
@@ -131,7 +143,7 @@ function Form() {
           onInput={handleDescriptionChnage}
           length={20}
         />
-        <Input title="Image" id="image" type="file" />
+        <ImageUpload id="image" onInput={handleImage} />
 
         <FormButton
           name="Add Place"

@@ -82,7 +82,6 @@ function Register() {
 
   const handleImage = useCallback(
     (image, id) => {
-      console.log(image.name);
       setUserDetails({
         ...userDetails,
         [id]: image,

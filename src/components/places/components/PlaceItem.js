@@ -9,7 +9,7 @@ import { useHttpClient } from "../../../hooks/fetchCall";
 import Loading from "../../shared/components/Loading";
 
 function PlaceItem(props) {
-  const { userLogin } = useSelector((state) => state);
+  const { userLogin, api } = useSelector((state) => state);
   const navigate = useNavigate();
   const { title, image, descrition, address, _id, userID } = props.singlePlace;
   const { loading, sendRequest } = useHttpClient();
@@ -68,7 +68,7 @@ function PlaceItem(props) {
     <div className="card text-center my-3">
       {loading && <Loading />}
       <div className="card-header">
-        <img src={image} alt={title} className="w-100" />
+        <img src={`${api}${image}`} alt={title} className="w-100" />
       </div>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
