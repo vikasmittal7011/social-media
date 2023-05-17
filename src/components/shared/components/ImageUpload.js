@@ -39,7 +39,7 @@ function ImageUpload(props) {
         type="file"
         id={props.id}
         name={props.id}
-        accept=".jpg,.jpeg"
+        accept=".jpg,.jpeg,.png"
         style={{ display: "none" }}
         onChange={pickerHandler}
       />

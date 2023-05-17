@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function UserItem(props) {
+  const { api } = useSelector((state) => state);
   const { id, name, image, placesCount } = props;
   return (
     <div className="container rounded-5" style={{ width: "25rem" }}>
@@ -10,7 +12,7 @@ function UserItem(props) {
           <div className="row g-0">
             <div className="col-md-4">
               <img
-                src={image}
+                src={`${api}${image}`}
                 className="img-fluid rounded-circle m-2 ms-5"
                 alt={name}
                 style={{ maxWidth: "120px" }}

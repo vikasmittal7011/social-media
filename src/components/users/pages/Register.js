@@ -33,7 +33,6 @@ function Register() {
     confirmPassword: "confimpassword",
     image: "",
   });
-  // console.log(userDetails);
 
   const { name, email, password, confirmPassword, image } = userDetails;
 
@@ -115,17 +114,16 @@ function Register() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("image", image);
     try {
       const response = await sendRequest(
         "api/users/register",
         "POST",
-        JSON.stringify({ name, email, password }),
-        {
-          "Content-Type": "application/json",
-        },
-        true,
-        "/login",
-        true
+        formData
       );
       const { message, success } = response;
       if (!success) {
@@ -154,7 +152,11 @@ function Register() {
       <div className="container">
         <h2 className="text-center">Register Yourself !!!</h2>
         <div className="container w-75">
-          <form className="mt-2" onSubmit={handleFormSubmit}>
+          <form
+            enctype="multipart/form-data"
+            className="mt-2"
+            onSubmit={handleFormSubmit}
+          >
             <Input
               title="Name"
               type="text"
