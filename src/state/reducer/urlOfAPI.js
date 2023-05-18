@@ -1,4 +1,4 @@
-const reducer = (state = "http://localhost:5000/", action) => {
+const reducer = (state = `${process.env.REACT_APP_API}`, action) => {
   return state;
 };
 

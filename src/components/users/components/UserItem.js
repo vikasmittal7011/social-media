@@ -15,7 +15,7 @@ function UserItem(props) {
                 src={`${api}${image}`}
                 className="img-fluid rounded-circle m-2 ms-5"
                 alt={name}
-                style={{ maxWidth: "120px" }}
+                style={{ maxWidth: "120px", height: "110px" }}
               />
             </div>
             <div className="col-md-8">

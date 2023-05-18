@@ -12,7 +12,7 @@ export const useHttpClient = () => {
       setLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
-
+      
       try {
         const response = await fetch(`${api}${path}`, {
           method,
