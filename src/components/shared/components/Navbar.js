@@ -73,7 +73,8 @@ function Navbar() {
               name="Logout"
               type="info"
               onClick={() => {
-                updateUserLogin(false);
+                updateUserLogin(false, false);
+                localStorage.removeItem("userData");
                 navigate("/");
               }}
             />

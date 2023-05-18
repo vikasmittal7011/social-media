@@ -9,9 +9,42 @@ import AddPlaces from "./components/places/pages/AddPlaces";
 import UpdatePlace from "./components/places/pages/UpdatePlace";
 import Auth from "./components/users/pages/Auth";
 import Register from "./components/users/pages/Register";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "./state";
+// import { useNavigate } from "react-router-dom";
 
-function App() {
+const App = () => {
   const alert = useSelector((state) => state.alert);
+  const dispatch = useDispatch();
+  const { updateUserLogin } = bindActionCreators(actionCreators, dispatch);
+  // const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  useEffect(() => {
+    if (
+      userData &&
+      userData.token &&
+      new Date(userData.expiration) > new Date()
+    ) {
+      updateUserLogin(userData.userId, userData.token);
+    }
+  }, [updateUserLogin, userData]);
+
+  useEffect(() => {
+    let logoutTimer;
+    if (userData) {
+      const remainingTime =
+        new Date(userData.expiration) - new Date().getTime();
+      if (remainingTime < 0) {
+        logoutTimer = setTimeout(updateUserLogin(false, false), remainingTime);
+        localStorage.removeItem("userData");
+      }
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [userData, updateUserLogin]);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -34,6 +67,6 @@ function App() {
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -52,11 +52,11 @@ function ImageUpload(props) {
               alt="preview"
               width={"250px"}
               height={"200px"}
-              className="m-3"
+              className="my-3"
             />
           )}
         </div>
-        <Button name="Pick Image" type="secondary" onClick={pickImageHandler} />
+        <Button name="Pic Image" type="secondary" onClick={pickImageHandler} />
       </div>
     </div>
   );

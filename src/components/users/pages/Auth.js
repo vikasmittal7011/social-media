@@ -85,6 +85,17 @@ function Auth() {
           removeAlert();
         }, 2000);
       } else {
+        const tokenExpirationDate = new Date(
+          new Date().getTime() + 1000 * 60 * 60
+        );
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            userId: existingUser._id,
+            token: token,
+            expiration: tokenExpirationDate.toISOString(),
+          })
+        );
         updateUserLogin(existingUser._id, token);
         activateAlert(message, "Success");
         setTimeout(() => {
