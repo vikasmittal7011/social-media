@@ -61,7 +61,6 @@ function PlaceItem(props) {
           }, 2000);
         }
       } catch (err) {
-        console.log(err);
       }
     }
   };

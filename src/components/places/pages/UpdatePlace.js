@@ -58,7 +58,7 @@ function UpdatePlace() {
   );
 
   const checkValid = (title, des) => {
-    if (title.length >= 3 && des.length >= 5) {
+    if (title.length >= 3 && des.length >= 8) {
       setIsFormvalid(true);
     } else {
       setIsFormvalid(false);

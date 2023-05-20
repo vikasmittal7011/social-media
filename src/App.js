@@ -11,7 +11,6 @@ const Auth = lazy(() => import("./components/users/pages/Auth"));
 const UserPlace = lazy(() => import("./components/places/pages/UserPlace"));
 const Alert = lazy(() => import("./components/shared/components/Alert"));
 const Navbar = lazy(() => import("./components/shared/components/Navbar"));
-const About = lazy(() => import("./components/shared/components/About"));
 const Register = lazy(() => import("./components/users/pages/Register"));
 const AddPlaces = lazy(() => import("./components/places/pages/AddPlaces"));
 
@@ -55,7 +54,6 @@ const App = () => {
             </div>
             <Routes>
               <Route exact path="/" element={<Users />} />
-              <Route exact path="about" element={<About />} />
               <Route exact path="/:userID/places" element={<UserPlace />} />
               <Route exact path="/places/addPlace" element={<AddPlaces />} />
               <Route exact path="/places/:placeId" element={<UpdatePlace />} />

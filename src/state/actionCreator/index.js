@@ -19,20 +19,6 @@ export const removeAlert = () => {
   };
 };
 
-export const addPlace = (name, description, address, isValid) => {
-  return (dispatch) => {
-    dispatch({
-      type: "addPlace",
-      payload: {
-        name: name,
-        description: description,
-        address: address,
-        isValid: isValid,
-      },
-    });
-  };
-};
-
 export const updateUserLogin = (userId, token) => {
   return (dispatch) => {
     dispatch({

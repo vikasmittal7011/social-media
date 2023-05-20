@@ -23,9 +23,12 @@ function UserPlace() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (loading && !placeOfUser) {
+    return <Loading />;
+  }
+
   return (
     <div className="container">
-      {loading && !placeOfUser && <Loading />}
       {!loading && placeOfUser && <PlaceList places={placeOfUser} />}
     </div>
   );

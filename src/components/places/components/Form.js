@@ -107,7 +107,7 @@ function Form() {
   };
 
   const checkValid = (name, des, add, image) => {
-    if (name.length >= 2 && des.length >= 3 && add.length >= 5 && image.name) {
+    if (name.length >= 2 && des.length >=8  && add.length >= 5 && image.name) {
       setIsValid(true);
     } else {
       setIsValid(false);
