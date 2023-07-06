@@ -25,7 +25,7 @@ function PlaceList(props) {
 
   return (
     places && (
-      <div className="container" style={{ width: "40vw" }}>
+      <div className="container col-md-7">
         {findedPlaces.map((place) => (
           <PlaceItem key={place._id} singlePlace={place} />
         ))}
