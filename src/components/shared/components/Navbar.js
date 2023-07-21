@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "./Button";
 import { useSelector } from "react-redux";
@@ -14,6 +14,15 @@ function Navbar() {
   const { userId } = userLogin;
   const { updateUserLogin } = bindActionCreators(actionCreators, dispatch);
   const location = useLocation().pathname;
+
+  const clickRef = useRef(null);
+
+  const setClickRef = () => {
+    if (window.innerWidth < 699) {
+      clickRef.current.click();
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
       <div className="container-fluid">
@@ -21,6 +30,7 @@ function Navbar() {
           myMedia
         </Link>
         <button
+          ref={clickRef}
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -38,6 +48,7 @@ function Navbar() {
                 className={`nav-link ${location === "/" && "active"}`}
                 aria-current="page"
                 to="/"
+                onClick={setClickRef}
               >
                 Home
               </Link>
@@ -47,6 +58,7 @@ function Navbar() {
                 <Link
                   className={`nav-link  ${location === "/about" && "active"}`}
                   to={`/${userId}/places`}
+                  onClick={setClickRef}
                 >
                   My Places
                 </Link>
@@ -57,6 +69,7 @@ function Navbar() {
                 <Link
                   className={`nav-link  ${location === "/about" && "active"}`}
                   to="/places/addPlace"
+                  onClick={setClickRef}
                 >
                   Add Place
                 </Link>
@@ -65,7 +78,7 @@ function Navbar() {
           </ul>
           {!userId && (
             <Link to="/login">
-              <Button name="Login" type="info" />
+              <Button name="Login" type="info" onClick={setClickRef} />
             </Link>
           )}
           {userId && (
